@@ -16,7 +16,7 @@ class WelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        let titleText = "⚡️FlashChat"
+//        let titleText = K.appName
 //        var charIndex = 0.0
 //        titleLabel.text = ""
 //
@@ -28,7 +28,7 @@ class WelcomeViewController: UIViewController {
 //
 //        }
         
-        titleLabel.text = "⚡️FlashChat"
+        titleLabel.text = K.appName
     }
 
     

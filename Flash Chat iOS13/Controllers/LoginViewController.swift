@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class LoginViewController: UIViewController {
 
@@ -15,13 +16,24 @@ class LoginViewController: UIViewController {
     
 
     @IBAction func loginPressed(_ sender: UIButton) {
-        performSegue(withIdentifier: "LoginToChat", sender: self)
+        if let email = emailTextfield.text, let password = passwordTextfield.text {
+            Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
+                guard let strongSelf = self else { return }
+                if let e = error {
+                    print(e.localizedDescription)
+                } else {
+                    strongSelf.performSegue(withIdentifier: K.loginSegue, sender: self)
+                }
+            }
+        }
+
+
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "LoginToChat" {
-            var chatVC = segue.destination as! ChatViewController
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "LoginToChat" {
+//            var chatVC = segue.destination as! ChatViewController
+//        }
+//    }
     
 }
