@@ -14,12 +14,9 @@ class ChatViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var messageTextfield: UITextField!
     
-    var messages : [Message] = [
-        Message(sender: "1@2.com", body: "hey"),
-        Message(sender: "1@b.com", body: "Hello"),
-        Message(sender: "1@c.com", body: "Well")
-        
-        ]
+    var messages : [Message] = [ ]
+
+    let db = Firestore.firestore()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,9 +28,71 @@ class ChatViewController: UIViewController {
         
         navigationItem.hidesBackButton = true
         
+        loadMessages()
+        
+    }
+    
+    func loadMessages(){
+        
+        db.collection(K.FStore.collectionName).getDocuments { (querySnapshot, error) in
+            if let e = error {
+                print( "it is a error retriving data from firestore, \(e)")
+            } else {
+                if let snapshotDocuments = querySnapshot?.documents {
+                    for doc in snapshotDocuments{
+                        let data  = doc.data()
+                        if let messageSender = data[K.FStore.senderField] as? String,
+                           let messageBody = data[K.FStore.bodyField] as?String{
+                            let newMessage = Message(sender: messageSender, body: messageBody)
+                            self.messages.append(newMessage)
+                            
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
+                            
+                        }
+                    }
+                }
+            }
+        }
+        
+//        example from https://firebase.google.com/docs/firestore/quickstart#swift
+//        db.collection("users").getDocuments() { (querySnapshot, err) in
+//            if let err = err {
+//                print("Error getting documents: \(err)")
+//            } else {
+//                for document in querySnapshot!.documents {
+//                    print("\(document.documentID) => \(document.data())")
+//                }
+//            }
+//        }
     }
     
     @IBAction func sendPressed(_ sender: UIButton) {
+        if let messageBody = messageTextfield.text, let messageSender = Auth.auth().currentUser?.email{
+            db.collection(K.FStore.collectionName).addDocument(data: [K.FStore.senderField : messageSender,
+                                                                      K.FStore.bodyField : messageBody]) { (error) in
+                if let e = error {
+                    print("There was an issue saving data in firestore , \(e.localizedDescription)")
+                } else{
+                    print("Data saved!")
+                }
+            }
+        
+//            example from https://firebase.google.com/docs/firestore/quickstart#swift
+//            var ref: DocumentReference? = nil
+//            ref = db.collection("users").addDocument(data: [
+//                "first": "Ada",
+//                "last": "Lovelace",
+//                "born": 1815
+//            ]) { err in
+//                if let err = err {
+//                    print("Error adding document: \(err)")
+//                } else {
+//                    print("Document added with ID: \(ref!.documentID)")
+//                }
+//            }
+        }
     }
     
     @IBAction func logOutPressed(_ sender: UIBarButtonItem) {
