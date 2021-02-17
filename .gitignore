@@ -37,3 +37,11 @@ Pods/leveldb-library/LICENSE
 *.markdown
 Pods/PromisesObjC/LICENSE
 Pods/GTMSessionFetcher/LICENSE
+Pods/IQKeyboardManagerSwift/IQKeyboardManagerSwift/Resources/IQKeyboardManager.bundle/IQButtonBarArrowUp@3x.png
+Pods/IQKeyboardManagerSwift/IQKeyboardManagerSwift/Resources/IQKeyboardManager.bundle/IQButtonBarArrowUp@2x.png
+Pods/IQKeyboardManagerSwift/IQKeyboardManagerSwift/Resources/IQKeyboardManager.bundle/IQButtonBarArrowRight@3x.png
+Pods/IQKeyboardManagerSwift/IQKeyboardManagerSwift/Resources/IQKeyboardManager.bundle/IQButtonBarArrowRight@2x.png
+Pods/IQKeyboardManagerSwift/IQKeyboardManagerSwift/Resources/IQKeyboardManager.bundle/IQButtonBarArrowLeft@3x.png
+Pods/IQKeyboardManagerSwift/IQKeyboardManagerSwift/Resources/IQKeyboardManager.bundle/IQButtonBarArrowLeft@2x.png
+Pods/IQKeyboardManagerSwift/IQKeyboardManagerSwift/Resources/IQKeyboardManager.bundle/IQButtonBarArrowDown@3x.png
+Pods/IQKeyboardManagerSwift/IQKeyboardManagerSwift/Resources/IQKeyboardManager.bundle/IQButtonBarArrowDown@2x.png
